@@ -211,7 +211,111 @@ icon_menu.addEventListener("click",function(e){
   
 
 
+let elem = document.querySelector('.coints-testimonials');
+let customers = document.getElementById('customers');
+let project = document.getElementById('project');
+let year = document.getElementById('year');
+let wins = document.getElementById('wins');
+let customNum = customers.innerHTML;
+let projectNum = project.innerHTML;
+let yearNum = year.innerHTML;
+let winsNum = wins.innerHTML;
+
+document.addEventListener('scroll', function onScroll() {
+  let posTop = elem.getBoundingClientRect().top;
   
+
+
+  if(posTop < window.innerHeight){
+   this.removeEventListener('scroll', onScroll);
+
+
+  runningNumber(customNum,customers,1);
+  runningNumber(projectNum,project,1);
+  runningNumber(yearNum,year,50);
+  runningNumber(winsNum,wins,1);
+  }
+  // Блок достиг верхней границы экрана (или выше)
+  // elem.classList.toggle('visible', posTop <= 0);
+  
+  // Блок только появляется снизу (или выше)
+  // elem.classList.toggle('visible', posTop < window.innerHeight);
+  
+  // Блок целиком находится в видимой зоне
+ 
+});
+
+function runningNumber(num,elem, speed){
+   
+   let start = 0;
+   
+   let interval = setInterval(() =>{
+     
+     elem.innerHTML = ++start;
+      if(start == num){
+         clearInterval(interval);
+      }
+     
+   },
+       speed);
+}
+
+let email = document.querySelector(".form-contact__mail");
+let submit = document.querySelector(".form-contact__submit");
+submit.disabled = true;
+email.addEventListener("input", function (event) {
+  
+  if (validateEmail(email.value)) {
+   email.classList.remove('error');
+   email.classList.add('valid');
+   submit.disabled = false;
+  } else {
+   email.classList.remove('valid');
+   email.classList.add('error');
+   submit.disabled = true;
+  }
+});
+
+
+function validateEmail(email) {
+   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   return re.test(String(email).toLowerCase());
+}
+
+
+
+
+let hmain = document.querySelector('.about');
+let head = document.querySelector('.header');
+document.addEventListener('scroll', function() {
+   let posmain = hmain.getBoundingClientRect().top;
+   
+    if(posmain <= 0){
+       head.style.position = 'fixed';
+       head.classList.add('fix');
+    }else{
+       head.style.position = 'absolute';
+       head.classList.remove('fix');
+    }
+
+
+});
+
+//Scrolling
+const smoothLinks = document.querySelectorAll('a[href^="#"]');
+for (let smoothLink of smoothLinks) {
+    smoothLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        const id = smoothLink.getAttribute('href');
+
+        document.querySelector(id).scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    });
+};
+
+
 /*
 
 document.documentElement.addEventListener("click", function(e){
